@@ -1,0 +1,736 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Costa Brava — Cevichería en Trujillo</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ocean: #0a3d62;
+    --ocean-light: #1a5276;
+    --sand: #f5e6c8;
+    --sand-dark: #e8c98a;
+    --coral: #c0392b;
+    --coral-light: #e74c3c;
+    --lime: #27ae60;
+    --white: #fdfaf5;
+    --dark: #1a1208;
+    --text-mid: #4a3728;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--white);
+    color: var(--dark);
+    overflow-x: hidden;
+  }
+
+  /* NAV */
+  nav {
+    position: fixed; top: 0; width: 100%; z-index: 100;
+    background: rgba(10,61,98,0.95);
+    backdrop-filter: blur(8px);
+    padding: 0 2.5rem;
+    display: flex; align-items: center; justify-content: space-between;
+    height: 64px;
+  }
+  .nav-logo {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.4rem; font-weight: 700;
+    color: var(--sand);
+    letter-spacing: 0.05em;
+  }
+  .nav-logo span { color: var(--sand-dark); font-style: italic; }
+  .nav-links { display: flex; gap: 2rem; list-style: none; }
+  .nav-links a {
+    color: rgba(245,230,200,0.75);
+    text-decoration: none; font-size: 0.85rem;
+    font-weight: 500; letter-spacing: 0.06em; text-transform: uppercase;
+    transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--sand); }
+  .nav-cta {
+    background: var(--coral);
+    color: white; border: none;
+    padding: 0.5rem 1.25rem; border-radius: 2px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.82rem; font-weight: 500;
+    cursor: pointer; letter-spacing: 0.05em;
+    text-decoration: none; text-transform: uppercase;
+    transition: background 0.2s;
+  }
+  .nav-cta:hover { background: var(--coral-light); }
+
+  /* HERO */
+  .hero {
+    min-height: 100vh;
+    background: linear-gradient(160deg, var(--ocean) 0%, #0d2137 60%, #0a0f1a 100%);
+    display: flex; flex-direction: column;
+    justify-content: center; align-items: flex-start;
+    padding: 0 6vw; padding-top: 64px;
+    position: relative; overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: url('https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=1600&q=70') center/cover;
+    opacity: 0.18;
+  }
+  .hero-waves {
+    position: absolute; bottom: 0; left: 0; width: 100%; height: 120px;
+    background: var(--white);
+    clip-path: ellipse(60% 100% at 50% 100%);
+  }
+  .hero-tag {
+    background: var(--coral);
+    color: white; padding: 0.3rem 0.9rem;
+    font-size: 0.75rem; font-weight: 500; letter-spacing: 0.12em;
+    text-transform: uppercase; border-radius: 1px;
+    margin-bottom: 1.5rem;
+    position: relative; z-index: 1;
+  }
+  .hero h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(3.5rem, 8vw, 7rem);
+    font-weight: 900; line-height: 0.95;
+    color: var(--sand);
+    position: relative; z-index: 1;
+    max-width: 700px;
+  }
+  .hero h1 em {
+    font-style: italic; color: var(--sand-dark);
+    display: block;
+  }
+  .hero-sub {
+    margin: 1.8rem 0 2.5rem;
+    font-size: 1.05rem; color: rgba(245,230,200,0.7);
+    max-width: 480px; line-height: 1.65;
+    position: relative; z-index: 1;
+    font-weight: 300;
+  }
+  .hero-btns { display: flex; gap: 1rem; position: relative; z-index: 1; flex-wrap: wrap; }
+  .btn-primary {
+    background: var(--coral); color: white;
+    padding: 0.9rem 2rem; border-radius: 2px;
+    font-size: 0.9rem; font-weight: 500;
+    text-decoration: none; letter-spacing: 0.06em; text-transform: uppercase;
+    transition: background 0.2s, transform 0.15s;
+    display: inline-block;
+  }
+  .btn-primary:hover { background: var(--coral-light); transform: translateY(-1px); }
+  .btn-outline {
+    border: 1.5px solid rgba(245,230,200,0.4); color: var(--sand);
+    padding: 0.9rem 2rem; border-radius: 2px;
+    font-size: 0.9rem; font-weight: 500;
+    text-decoration: none; letter-spacing: 0.06em; text-transform: uppercase;
+    transition: border-color 0.2s, background 0.2s;
+    display: inline-block;
+  }
+  .btn-outline:hover { border-color: var(--sand); background: rgba(245,230,200,0.08); }
+  .hero-stats {
+    position: absolute; right: 6vw; bottom: 14vh;
+    display: flex; gap: 3rem; z-index: 1;
+  }
+  .stat { text-align: center; }
+  .stat-num {
+    font-family: 'Playfair Display', serif;
+    font-size: 2.6rem; font-weight: 700; color: var(--sand-dark);
+    line-height: 1;
+  }
+  .stat-label {
+    font-size: 0.75rem; color: rgba(245,230,200,0.55);
+    letter-spacing: 0.08em; text-transform: uppercase; margin-top: 0.3rem;
+  }
+
+  /* SECTIONS */
+  section { padding: 6rem 6vw; }
+  .section-tag {
+    font-size: 0.73rem; font-weight: 500; letter-spacing: 0.15em;
+    text-transform: uppercase; color: var(--coral);
+    margin-bottom: 0.8rem;
+  }
+  .section-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2rem, 4vw, 3rem);
+    font-weight: 700; line-height: 1.15;
+    color: var(--ocean);
+    max-width: 560px;
+  }
+  .section-title em { font-style: italic; color: var(--coral); }
+
+  /* CARTA */
+  .carta { background: var(--white); }
+  .carta-intro {
+    display: flex; justify-content: space-between; align-items: flex-end;
+    margin-bottom: 3.5rem; gap: 2rem; flex-wrap: wrap;
+  }
+  .carta-desc {
+    color: var(--text-mid); font-size: 1rem; max-width: 400px;
+    line-height: 1.7; font-weight: 300; margin-top: 1rem;
+  }
+  .menu-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1.5px;
+    background: #d8c9a8;
+    border: 1.5px solid #d8c9a8;
+    border-radius: 4px; overflow: hidden;
+  }
+  .menu-card {
+    background: var(--white);
+    padding: 1.75rem 2rem;
+    transition: background 0.2s;
+  }
+  .menu-card:hover { background: #faf3e6; }
+  .menu-icon {
+    font-size: 2rem; margin-bottom: 1rem;
+  }
+  .menu-name {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.25rem; font-weight: 700;
+    color: var(--ocean); margin-bottom: 0.5rem;
+  }
+  .menu-desc {
+    font-size: 0.88rem; color: var(--text-mid);
+    line-height: 1.6; font-weight: 300; margin-bottom: 1.2rem;
+  }
+  .menu-price {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.3rem; font-weight: 700;
+    color: var(--coral);
+  }
+  .menu-badge {
+    display: inline-block;
+    background: var(--sand); color: var(--text-mid);
+    font-size: 0.7rem; letter-spacing: 0.08em;
+    text-transform: uppercase; padding: 0.2rem 0.6rem;
+    border-radius: 1px; margin-left: 0.5rem;
+    vertical-align: middle;
+    font-weight: 500;
+  }
+
+  /* NOSOTROS */
+  .nosotros {
+    background: var(--ocean);
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 5rem; align-items: center;
+  }
+  .nosotros .section-title { color: var(--sand); }
+  .nosotros .section-tag { color: var(--sand-dark); }
+  .nosotros-text {
+    color: rgba(245,230,200,0.65);
+    font-size: 1rem; line-height: 1.75;
+    font-weight: 300; margin: 1.5rem 0 2.5rem;
+  }
+  .valores-grid {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem;
+  }
+  .valor {
+    border-top: 2px solid var(--coral);
+    padding-top: 1rem;
+  }
+  .valor-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 1rem; color: var(--sand); margin-bottom: 0.4rem;
+  }
+  .valor-desc {
+    font-size: 0.83rem; color: rgba(245,230,200,0.5);
+    line-height: 1.55; font-weight: 300;
+  }
+  .nosotros-img {
+    border-radius: 2px; overflow: hidden;
+    aspect-ratio: 4/5; position: relative;
+  }
+  .nosotros-img img {
+    width: 100%; height: 100%; object-fit: cover;
+    filter: saturate(0.85) contrast(1.05);
+  }
+  .img-caption {
+    position: absolute; bottom: 0; left: 0; right: 0;
+    background: linear-gradient(transparent, rgba(10,61,98,0.85));
+    color: var(--sand); padding: 2rem 1.5rem 1.25rem;
+    font-size: 0.8rem; letter-spacing: 0.06em; text-transform: uppercase;
+  }
+
+  /* GALERIA */
+  .galeria { background: var(--sand); }
+  .galeria .section-title { color: var(--ocean); }
+  .galeria-grid {
+    margin-top: 3rem;
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr;
+    grid-template-rows: 240px 240px;
+    gap: 6px;
+    border-radius: 4px; overflow: hidden;
+  }
+  .galeria-item { overflow: hidden; position: relative; }
+  .galeria-item:first-child { grid-row: 1 / 3; }
+  .galeria-item img {
+    width: 100%; height: 100%; object-fit: cover;
+    transition: transform 0.5s ease;
+    filter: saturate(0.9);
+  }
+  .galeria-item:hover img { transform: scale(1.04); }
+  .galeria-item::after {
+    content: attr(data-label);
+    position: absolute; bottom: 0.75rem; left: 1rem;
+    font-size: 0.72rem; color: rgba(255,255,255,0.85);
+    letter-spacing: 0.07em; text-transform: uppercase;
+    text-shadow: 0 1px 4px rgba(0,0,0,0.5);
+  }
+
+  /* TESTIMONILOS */
+  .testimonios { background: var(--white); }
+  .test-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1.5rem; margin-top: 3rem;
+  }
+  .test-card {
+    border: 1px solid #e0d4b8;
+    border-top: 3px solid var(--coral);
+    padding: 2rem;
+    background: white;
+  }
+  .test-stars { color: var(--sand-dark); font-size: 0.9rem; margin-bottom: 1rem; }
+  .test-text {
+    font-size: 0.93rem; color: var(--text-mid);
+    line-height: 1.7; font-style: italic; font-weight: 300;
+    margin-bottom: 1.25rem;
+  }
+  .test-author { font-weight: 500; font-size: 0.85rem; color: var(--ocean); }
+  .test-role { font-size: 0.78rem; color: #999; margin-top: 0.2rem; }
+
+  /* COMO PEDIR */
+  .como { background: var(--ocean); }
+  .como .section-title { color: var(--sand); }
+  .como .section-tag { color: var(--sand-dark); }
+  .pasos-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 0;
+    margin-top: 3.5rem;
+    position: relative;
+  }
+  .pasos-grid::before {
+    content: '';
+    position: absolute; top: 1.8rem; left: 12%; right: 12%;
+    height: 1px; background: rgba(245,230,200,0.2);
+    pointer-events: none;
+  }
+  .paso { text-align: center; padding: 1.5rem; }
+  .paso-num {
+    width: 3.5rem; height: 3.5rem;
+    border: 1.5px solid var(--coral);
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Playfair Display', serif;
+    font-size: 1.3rem; font-weight: 700; color: var(--sand-dark);
+    margin: 0 auto 1.25rem;
+    background: rgba(192,57,43,0.12);
+  }
+  .paso-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.05rem; color: var(--sand);
+    margin-bottom: 0.5rem;
+  }
+  .paso-desc { font-size: 0.83rem; color: rgba(245,230,200,0.5); line-height: 1.6; font-weight: 300; }
+
+  /* CONTACTO */
+  .contacto {
+    background: var(--dark);
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 5rem; align-items: start;
+  }
+  .contacto .section-title { color: var(--sand); }
+  .contacto .section-tag { color: var(--sand-dark); }
+  .contact-info { margin-top: 2rem; }
+  .contact-item {
+    display: flex; align-items: flex-start; gap: 1rem;
+    margin-bottom: 1.75rem;
+  }
+  .contact-icon {
+    width: 2.5rem; height: 2.5rem; min-width: 2.5rem;
+    background: rgba(192,57,43,0.15); border: 1px solid var(--coral);
+    border-radius: 2px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1rem;
+  }
+  .contact-label { font-size: 0.72rem; color: rgba(245,230,200,0.4); letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 0.25rem; }
+  .contact-value { font-size: 0.92rem; color: var(--sand); font-weight: 300; line-height: 1.5; }
+  .form-side { }
+  .form-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.5rem; color: var(--sand); margin-bottom: 1.5rem;
+  }
+  .form-row { margin-bottom: 1rem; }
+  .form-row label {
+    display: block; font-size: 0.75rem; color: rgba(245,230,200,0.5);
+    letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 0.4rem;
+  }
+  .form-row input, .form-row select, .form-row textarea {
+    width: 100%;
+    background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(245,230,200,0.15);
+    color: var(--sand);
+    padding: 0.75rem 1rem;
+    font-family: 'DM Sans', sans-serif; font-size: 0.9rem;
+    border-radius: 2px;
+    transition: border-color 0.2s;
+    outline: none;
+  }
+  .form-row input::placeholder, .form-row textarea::placeholder { color: rgba(245,230,200,0.25); }
+  .form-row input:focus, .form-row select:focus, .form-row textarea:focus {
+    border-color: var(--coral);
+  }
+  .form-row select option { background: var(--dark); color: var(--sand); }
+  .form-row textarea { resize: vertical; min-height: 100px; }
+  .form-submit {
+    background: var(--coral); color: white; border: none;
+    padding: 0.9rem 2.5rem; border-radius: 2px;
+    font-family: 'DM Sans', sans-serif; font-size: 0.88rem;
+    font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase;
+    cursor: pointer; transition: background 0.2s;
+    width: 100%; margin-top: 0.5rem;
+  }
+  .form-submit:hover { background: var(--coral-light); }
+
+  /* FOOTER */
+  footer {
+    background: #0a0f1a;
+    padding: 3rem 6vw;
+    display: flex; justify-content: space-between; align-items: center;
+    flex-wrap: wrap; gap: 1.5rem;
+    border-top: 1px solid rgba(245,230,200,0.1);
+  }
+  .footer-logo {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.2rem; color: var(--sand);
+  }
+  .footer-logo span { font-style: italic; color: var(--sand-dark); }
+  .footer-tagline { font-size: 0.78rem; color: rgba(245,230,200,0.35); margin-top: 0.25rem; }
+  .footer-links { display: flex; gap: 1.5rem; }
+  .footer-links a { font-size: 0.8rem; color: rgba(245,230,200,0.4); text-decoration: none; transition: color 0.2s; }
+  .footer-links a:hover { color: var(--sand); }
+  .footer-copy { font-size: 0.75rem; color: rgba(245,230,200,0.2); }
+
+  /* WHATSAPP FLOAT */
+  .wa-float {
+    position: fixed; bottom: 2rem; right: 2rem; z-index: 200;
+    width: 3.5rem; height: 3.5rem;
+    background: #25d366; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    box-shadow: 0 4px 20px rgba(37,211,102,0.4);
+    text-decoration: none;
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+  .wa-float:hover { transform: scale(1.08); box-shadow: 0 6px 24px rgba(37,211,102,0.5); }
+  .wa-float svg { width: 1.8rem; height: 1.8rem; fill: white; }
+
+  @media(max-width: 900px){
+    .nosotros, .contacto { grid-template-columns: 1fr; gap: 3rem; }
+    .hero-stats { position: static; margin-top: 3rem; flex-wrap: wrap; gap: 2rem; }
+    .galeria-grid { grid-template-columns: 1fr 1fr; grid-template-rows: auto; }
+    .galeria-item:first-child { grid-row: auto; }
+    .nav-links { display: none; }
+    .pasos-grid::before { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">Costa <span>Brava</span></div>
+  <ul class="nav-links">
+    <li><a href="#carta">Carta</a></li>
+    <li><a href="#nosotros">Nosotros</a></li>
+    <li><a href="#galeria">Galería</a></li>
+    <li><a href="#como">Cómo Pedir</a></li>
+    <li><a href="#contacto">Contacto</a></li>
+  </ul>
+  <a href="https://wa.me/51944000000" class="nav-cta" target="_blank">Pedir ahora</a>
+</nav>
+
+<!-- HERO -->
+<section class="hero" id="inicio">
+  <div class="hero-tag">🎣 Trujillo, La Libertad</div>
+  <h1>El mar<em>en tu mesa.</em></h1>
+  <p class="hero-sub">Cevichería especializada en platos marinos. Ingredientes frescos del día, sabor auténtico y atención de calidad en el corazón de Trujillo.</p>
+  <div class="hero-btns">
+    <a href="#carta" class="btn-primary">Ver la carta</a>
+    <a href="https://wa.me/51944000000" class="btn-outline" target="_blank">Pedir por WhatsApp</a>
+  </div>
+  <div class="hero-stats">
+    <div class="stat">
+      <div class="stat-num">43k+</div>
+      <div class="stat-label">Clientes potenciales</div>
+    </div>
+    <div class="stat">
+      <div class="stat-num">100%</div>
+      <div class="stat-label">Ingredientes frescos</div>
+    </div>
+    <div class="stat">
+      <div class="stat-num">S/25</div>
+      <div class="stat-label">Desde</div>
+    </div>
+  </div>
+  <div class="hero-waves"></div>
+</section>
+
+<!-- CARTA -->
+<section class="carta" id="carta">
+  <div class="carta-intro">
+    <div>
+      <div class="section-tag">🦞 Nuestra carta</div>
+      <h2 class="section-title">Lo mejor del <em>mar peruano</em></h2>
+      <p class="carta-desc">Platos preparados al momento con pescado y mariscos del día. Sin congelados, sin atajos.</p>
+    </div>
+    <a href="https://wa.me/51944000000" class="btn-primary" target="_blank">Pedir por WhatsApp</a>
+  </div>
+  <div class="menu-grid">
+    <div class="menu-card">
+      <div class="menu-icon">🐟</div>
+      <div class="menu-name">Ceviche Clásico <span class="menu-badge">El más pedido</span></div>
+      <div class="menu-desc">Pescado fresco marinado en limón, cebolla morada, ají limo y culantro. Servido con camote y choclo.</div>
+      <div class="menu-price">S/ 28</div>
+    </div>
+    <div class="menu-card">
+      <div class="menu-icon">🦑</div>
+      <div class="menu-name">Combinado Costa Brava</div>
+      <div class="menu-desc">Ceviche + chicharrón de pescado + arroz con mariscos. El favorito de la casa para compartir.</div>
+      <div class="menu-price">S/ 38</div>
+    </div>
+    <div class="menu-card">
+      <div class="menu-icon">🦐</div>
+      <div class="menu-name">Trio Marino</div>
+      <div class="menu-desc">Ceviche, tiradito y leche de tigre. Tres texturas, un solo sabor del Pacífico.</div>
+      <div class="menu-price">S/ 42</div>
+    </div>
+    <div class="menu-card">
+      <div class="menu-icon">🍚</div>
+      <div class="menu-name">Arroz con Mariscos</div>
+      <div class="menu-desc">Arroz cremoso cocinado con mariscos frescos, pisco, ají amarillo y hierbas andinas.</div>
+      <div class="menu-price">S/ 32</div>
+    </div>
+    <div class="menu-card">
+      <div class="menu-icon">🐙</div>
+      <div class="menu-name">Pulpo a la Parrilla</div>
+      <div class="menu-desc">Pulpo tiernizado, dorado en parrilla con aceite de oliva, limón y paprika ahumada.</div>
+      <div class="menu-price">S/ 45</div>
+    </div>
+    <div class="menu-card">
+      <div class="menu-icon">🍤</div>
+      <div class="menu-name">Chicharrón de Pescado</div>
+      <div class="menu-desc">Trozos de pescado apanados y fritos, crujientes por fuera, jugosos por dentro. Con salsa tártara.</div>
+      <div class="menu-price">S/ 26</div>
+    </div>
+  </div>
+</section>
+
+<!-- NOSOTROS -->
+<section class="nosotros" id="nosotros">
+  <div>
+    <div class="section-tag">🌊 Nuestra historia</div>
+    <h2 class="section-title">Sabor auténtico <em>de costa</em> a mesa</h2>
+    <p class="nosotros-text">Costa Brava nació en Trujillo con una misión simple: llevar el sabor honesto del mar peruano a las familias, trabajadores y estudiantes de La Libertad. Cada plato refleja nuestra pasión por los ingredientes frescos y la tradición marina del norte.</p>
+    <div class="valores-grid">
+      <div class="valor">
+        <div class="valor-title">🐠 Ingredientes del día</div>
+        <div class="valor-desc">Solo pescados y mariscos frescos. Sin congelados ni conservantes.</div>
+      </div>
+      <div class="valor">
+        <div class="valor-title">📍 100% Trujillo</div>
+        <div class="valor-desc">Av. Víctor Larco Herrera 1340, Urb. California.</div>
+      </div>
+      <div class="valor">
+        <div class="valor-title">🚴 Delivery express</div>
+        <div class="valor-desc">Pedidos por WhatsApp. Entrega en toda la ciudad.</div>
+      </div>
+      <div class="valor">
+        <div class="valor-title">🏢 Convenios B2B</div>
+        <div class="valor-desc">Para empresas, universidades y gimnasios. Pide cotización.</div>
+      </div>
+    </div>
+  </div>
+  <div class="nosotros-img">
+    <img src="https://images.unsplash.com/photo-1535140728325-a4d3707eee61?w=800&q=80" alt="Platos marinos frescos Costa Brava">
+    <div class="img-caption">Preparado con ingredientes frescos cada día</div>
+  </div>
+</section>
+
+<!-- GALERIA -->
+<section class="galeria" id="galeria">
+  <div class="section-tag">📷 Galería</div>
+  <h2 class="section-title">Nuestros <em>platos</em> y ambiente</h2>
+  <div class="galeria-grid">
+    <div class="galeria-item" data-label="Ceviche clásico">
+      <img src="https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=800&q=80" alt="Ceviche Costa Brava">
+    </div>
+    <div class="galeria-item" data-label="Mariscos frescos">
+      <img src="https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=600&q=80" alt="Mariscos frescos">
+    </div>
+    <div class="galeria-item" data-label="Ambiente del local">
+      <img src="https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=600&q=80" alt="Ambiente Costa Brava">
+    </div>
+    <div class="galeria-item" data-label="Pulpo a la parrilla">
+      <img src="https://images.unsplash.com/photo-1565299507177-b0ac66763828?w=600&q=80" alt="Pulpo a la parrilla">
+    </div>
+    <div class="galeria-item" data-label="Ingredientes del día">
+      <img src="https://images.unsplash.com/photo-1498837167922-ddd27525d352?w=600&q=80" alt="Ingredientes frescos">
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIOS -->
+<section class="testimonios">
+  <div class="section-tag">⭐ Testimonios</div>
+  <h2 class="section-title">Lo que dicen <em>nuestros clientes</em></h2>
+  <div class="test-grid">
+    <div class="test-card">
+      <div class="test-stars">★★★★★</div>
+      <p class="test-text">"El ceviche de Costa Brava es el mejor de Trujillo. Siempre fresco, siempre a punto. Lo pido todos los viernes con mis colegas de la oficina."</p>
+      <div class="test-author">Valentina Ríos</div>
+      <div class="test-role">Trabajadora, Trujillo Centro</div>
+    </div>
+    <div class="test-card">
+      <div class="test-stars">★★★★★</div>
+      <p class="test-text">"Hicimos convenio para almuerzo de nuestros alumnos y la calidad es constante. El delivery es puntual y los chicos quedan satisfechos."</p>
+      <div class="test-author">Coordinación Académica</div>
+      <div class="test-role">Universidad, La Libertad</div>
+    </div>
+    <div class="test-card">
+      <div class="test-stars">★★★★★</div>
+      <p class="test-text">"El trio marino y el combinado son increíbles. Recomiendo Costa Brava a todos en el gimnasio: proteína de calidad y sabor sin igual."</p>
+      <div class="test-author">Carlos Mendoza</div>
+      <div class="test-role">Entrenador fitness, Trujillo</div>
+    </div>
+  </div>
+</section>
+
+<!-- COMO PEDIR -->
+<section class="como" id="como">
+  <div style="text-align:center;">
+    <div class="section-tag">⚡ Súper fácil</div>
+    <h2 class="section-title" style="max-width:none; color:var(--sand);">Tu pedido en <em style="color:var(--sand-dark);">4 pasos</em></h2>
+  </div>
+  <div class="pasos-grid">
+    <div class="paso">
+      <div class="paso-num">1</div>
+      <div class="paso-title">Elige tu plato</div>
+      <div class="paso-desc">Navega nuestra carta y escoge tu favorito. Ceviche, combinado, trio o más.</div>
+    </div>
+    <div class="paso">
+      <div class="paso-num">2</div>
+      <div class="paso-title">Escríbenos</div>
+      <div class="paso-desc">Por WhatsApp o desde la web. Tu pedido queda registrado en segundos.</div>
+    </div>
+    <div class="paso">
+      <div class="paso-num">3</div>
+      <div class="paso-title">Lo preparamos</div>
+      <div class="paso-desc">Nuestro equipo cocina tu orden con ingredientes frescos del día.</div>
+    </div>
+    <div class="paso">
+      <div class="paso-num">4</div>
+      <div class="paso-title">Delivery express</div>
+      <div class="paso-desc">Te lo llevamos a tu puerta en Trujillo, o recógelo en nuestro local.</div>
+    </div>
+  </div>
+  <div style="text-align:center; margin-top:3rem;">
+    <a href="https://wa.me/51944000000" class="btn-primary" target="_blank">Hacer mi pedido ahora</a>
+  </div>
+</section>
+
+<!-- CONTACTO -->
+<section class="contacto" id="contacto">
+  <div>
+    <div class="section-tag">📍 Contáctanos</div>
+    <h2 class="section-title">Estamos en <em>Trujillo</em></h2>
+    <div class="contact-info">
+      <div class="contact-item">
+        <div class="contact-icon">📍</div>
+        <div>
+          <div class="contact-label">Ubicación</div>
+          <div class="contact-value">Av. Víctor Larco Herrera 1340<br>Urb. California, Trujillo, La Libertad</div>
+        </div>
+      </div>
+      <div class="contact-item">
+        <div class="contact-icon">💬</div>
+        <div>
+          <div class="contact-label">WhatsApp</div>
+          <div class="contact-value">+51 944 000 000<br>Lun–Sáb · 11am a 8pm</div>
+        </div>
+      </div>
+      <div class="contact-item">
+        <div class="contact-icon">📱</div>
+        <div>
+          <div class="contact-label">Redes sociales</div>
+          <div class="contact-value">@costabrava.trujillo<br>Instagram · Facebook · TikTok</div>
+        </div>
+      </div>
+      <div class="contact-item">
+        <div class="contact-icon">🏢</div>
+        <div>
+          <div class="contact-label">Convenios B2B</div>
+          <div class="contact-value">Empresas, gimnasios, universidades<br>Solicita cotización corporativa</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="form-side">
+    <div class="form-title">Cotiza un convenio B2B</div>
+    <div class="form-row">
+      <label>Nombre o empresa</label>
+      <input type="text" placeholder="Tu nombre o razón social">
+    </div>
+    <div class="form-row">
+      <label>Teléfono / WhatsApp</label>
+      <input type="tel" placeholder="+51 9xx xxx xxx">
+    </div>
+    <div class="form-row">
+      <label>Tipo de convenio</label>
+      <select>
+        <option value="">Selecciona una opción</option>
+        <option>Oficina / Empresa (delivery diario)</option>
+        <option>Gimnasio / Centro fitness</option>
+        <option>Universidad / Instituto</option>
+        <option>Evento corporativo</option>
+        <option>Otro</option>
+      </select>
+    </div>
+    <div class="form-row">
+      <label>Mensaje</label>
+      <textarea placeholder="Cuéntanos sobre tu negocio y lo que necesitas..."></textarea>
+    </div>
+    <button class="form-submit" onclick="alert('¡Gracias! Te contactaremos pronto por WhatsApp.')">Enviar solicitud 🚀</button>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div>
+    <div class="footer-logo">Costa <span>Brava</span></div>
+    <div class="footer-tagline">Cevichería · Trujillo, La Libertad, Perú</div>
+  </div>
+  <div class="footer-links">
+    <a href="#carta">Carta</a>
+    <a href="#nosotros">Nosotros</a>
+    <a href="#contacto">Contacto</a>
+    <a href="https://maps.app.goo.gl/mFGjRd6dxmHCY7yy9" target="_blank">Mapa</a>
+  </div>
+  <div class="footer-copy">© 2026 Costa Brava — Todos los derechos reservados</div>
+</footer>
+
+<!-- WHATSAPP FLOAT -->
+<a href="https://wa.me/51944000000" class="wa-float" target="_blank" aria-label="Contactar por WhatsApp">
+  <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+    <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/>
+  </svg>
+</a>
+
+</body>
+</html>
